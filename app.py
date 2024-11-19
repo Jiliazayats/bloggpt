@@ -22,7 +22,7 @@ def get_recent_news(topic):
     url = f"https://newsapi.org/v2/everything?q={topic}&apiKey={newsapi_key}"
     response = requests.get(url)
     if response.status_code != 200:
-        raise HTTPException(status_code=500, detail="Ошибка при получении данных из NewsAPI")
+        raise HTTPException(status_code=500, detail=f"Ошибка при получении данных из NewsAPI: {response.text}")
     articles = response.json().get("articles", [])
     if not articles:
         return "Свежих новостей не найдено."
@@ -88,6 +88,7 @@ def generate_post(topic):
 async def generate_post_api(topic: Topic):
     generated_post = generate_post(topic.topic)
     return generated_post
+
 @app.get("/")
 async def root():
     return {"message": "Service is running"}
@@ -98,5 +99,6 @@ async def heartbeat_api():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=8000)
-
+    # Получаем порт из переменной окружения PORT, по умолчанию 8000
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=port)
