@@ -88,6 +88,9 @@ def generate_post(topic):
 async def generate_post_api(topic: Topic):
     generated_post = generate_post(topic.topic)
     return generated_post
+@app.get("/")
+async def root():
+    return {"message": "Service is running"}
 
 @app.get("/heartbeat")
 async def heartbeat_api():
