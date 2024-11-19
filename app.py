@@ -52,7 +52,7 @@ def generate_post(topic):
         response_meta = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt_meta}],
-            max_tokens=100,
+            max_tokens=60,
             n=1,
             temperature=0.7,
         )
@@ -70,7 +70,7 @@ def generate_post(topic):
         response_post = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt_post}],
-            max_tokens=1000,
+            max_tokens=100,
             n=1,
             temperature=0.7,
         )
