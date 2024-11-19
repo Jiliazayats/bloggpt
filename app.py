@@ -20,7 +20,10 @@ class Topic(BaseModel):
 
 def get_recent_news(topic):
     url = f"https://newsapi.org/v2/everything?q={topic}&apiKey={newsapi_key}"
-    response = requests.get(url)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
+    response = requests.get(url, headers=headers)
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail=f"Ошибка при получении данных из NewsAPI: {response.text}")
     articles = response.json().get("articles", [])
@@ -36,7 +39,7 @@ def generate_post(topic):
     prompt_title = f"Придумайте привлекательный заголовок для поста на тему: {topic}"
     try:
         response_title = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt_title}],
             max_tokens=50,
             n=1,
@@ -50,7 +53,7 @@ def generate_post(topic):
     prompt_meta = f"Напишите краткое, но информативное мета-описание для поста с заголовком: {title}"
     try:
         response_meta = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt_meta}],
             max_tokens=60,
             n=1,
@@ -68,7 +71,7 @@ def generate_post(topic):
     )
     try:
         response_post = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt_post}],
             max_tokens=100,
             n=1,
