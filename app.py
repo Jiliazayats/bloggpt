@@ -36,9 +36,9 @@ def generate_post(topic):
     prompt_title = f"Придумайте привлекательный заголовок для поста на тему: {topic}"
     try:
         response_title = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt_title}],
-            max_tokens=20,
+            max_tokens=40,
             n=1,
             temperature=0.7,
         )
@@ -50,9 +50,9 @@ def generate_post(topic):
     prompt_meta = f"Напишите краткое, но информативное мета-описание для поста с заголовком: {title}"
     try:
         response_meta = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt_meta}],
-            max_tokens=60,
+            max_tokens=50,
             n=1,
             temperature=0.7,
         )
@@ -68,9 +68,9 @@ def generate_post(topic):
     )
     try:
         response_post = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt_post}],
-            max_tokens=80,
+            max_tokens=50,
             n=1,
             temperature=0.7,
         )
