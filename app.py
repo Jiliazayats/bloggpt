@@ -6,8 +6,10 @@ import requests
 
 app = FastAPI()
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-newsapi_key = os.environ.get("NEWSAPI_KEY")
+
+# Получаем API ключи из переменных окружения
+openai.api_key = os.getenv("OPENAI_API_KEY")  # Устанавливаем ключ OpenAI из переменной окружения
+currentsapi_key = os.getenv("CURRENTS_API_KEY")  # Устанавливаем ключ Currents API из переменной окружения
 
 
 # Проверяем, что оба API ключа заданы, иначе выбрасываем ошибку
